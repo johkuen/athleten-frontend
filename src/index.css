@@ -206,4 +206,17 @@ h1 {
   .dashboard-card { min-width: 140px; }
 }
 
-/* ====== ENDE ====== */
+.login-container {
+  width: 100vw; /* oder 100%, je nach Bedarf */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.ranglisten-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+

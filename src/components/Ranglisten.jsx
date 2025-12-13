@@ -22,17 +22,14 @@ const csvLinks = {
 };
 
 const limits = {
-  // Luftgewehr (Standard)
   frauen:      { a: 629.1, b: 627.8 },
   herren:      { a: 628.9, b: 628.0 },
   juniorinnen: { a: 626.6, b: 624.9 },
   junioren:    { a: 624.1, b: 621.4 },
-  // Pistole
   frauen_pistole:      { a: 571, b: 569 },
   herren_pistole:      { a: 577, b: 574 },
   juniorinnen_pistole: { a: 563, b: 559 },
   junioren_pistole:    { a: 567, b: 563 },
-  // Kleinkaliber
   frauen_kleinkaliber:      { a: 586, b: 584 },
   herren_kleinkaliber:      { a: 586, b: 584 },
   juniorinnen_kleinkaliber: { a: 581, b: 578 },
@@ -180,7 +177,7 @@ export default function Ranglisten() {
 
   return (
     <div>
-      {/* --- NEU: Zum Athletenportal-Button oben rechts --- */}
+      {/* --- Zum Athletenportal-Button oben rechts --- */}
       <nav style={{
         width: "100%",
         background: "#1866a5",
@@ -208,53 +205,55 @@ export default function Ranglisten() {
         </Link>
       </nav>
 
-      <header>
-        <img src={logo} alt="Logo" id="logo" />
-      </header>
-      <h1>RANGLISTE</h1>
+      <div className="ranglisten-wrapper">
+        <header>
+          <img src={logo} alt="Logo" id="logo" />
+        </header>
+        <h1>RANGLISTE</h1>
 
-      <div id="discipline-buttons">
-        {disciplines.map(d => (
-          <button
-            key={d.key}
-            className={discipline === d.key ? "active" : ""}
-            onClick={() => setDiscipline(d.key)}
-          >
-            {d.label}
-          </button>
-        ))}
-      </div>
+        <div id="discipline-buttons">
+          {disciplines.map(d => (
+            <button
+              key={d.key}
+              className={discipline === d.key ? "active" : ""}
+              onClick={() => setDiscipline(d.key)}
+            >
+              {d.label}
+            </button>
+          ))}
+        </div>
 
-      <div id="buttons">
-        {wertungen.map(w => (
-          <button
-            key={w.key}
-            className={wertung === w.key ? "active" : ""}
-            data-wertung={w.key}
-            onClick={() => setWertung(w.key)}
-            disabled={!csvLinks[discipline][w.key]}
-          >
-            {w.label}
-          </button>
-        ))}
-      </div>
+        <div id="buttons">
+          {wertungen.map(w => (
+            <button
+              key={w.key}
+              className={wertung === w.key ? "active" : ""}
+              data-wertung={w.key}
+              onClick={() => setWertung(w.key)}
+              disabled={!csvLinks[discipline][w.key]}
+            >
+              {w.label}
+            </button>
+          ))}
+        </div>
 
-      <div id="content" style={{maxWidth:1100, margin:"0 auto"}}>
-        {loading ? (
-          <div>Lade Daten...</div>
-        ) : (
-          <>
-            {renderTable("frauen", "Frauen")}
-            {renderTable("herren", "Herren")}
-            {renderTable("juniorinnen", "Juniorinnen")}
-            {renderTable("junioren", "Junioren")}
-            {(!data.length) && (
-              <div className="coming-soon-hint" style={{marginTop:40}}>
-                Für diese Auswahl sind noch keine Daten hinterlegt.
-              </div>
-            )}
-          </>
-        )}
+        <div id="content" style={{maxWidth:1100, margin:"0 auto"}}>
+          {loading ? (
+            <div>Lade Daten...</div>
+          ) : (
+            <>
+              {renderTable("frauen", "Frauen")}
+              {renderTable("herren", "Herren")}
+              {renderTable("juniorinnen", "Juniorinnen")}
+              {renderTable("junioren", "Junioren")}
+              {(!data.length) && (
+                <div className="coming-soon-hint" style={{marginTop:40}}>
+                  Für diese Auswahl sind noch keine Daten hinterlegt.
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
