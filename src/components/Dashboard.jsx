@@ -1,3 +1,70 @@
+import { useEffect, useState } from "react";
+
 export default function Dashboard() {
-  return <h2>Dashboard</h2>;
+  // Userdaten aus localStorage holen
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      setUser(JSON.parse(userString));
+    }
+  }, []);
+
+  const [results, setResults] = useState([]);
+
+useEffect(() => {
+  if (user) {
+    fetch(`${import.meta.env.VITE_API_BASE}/api/results/${user.id}`)
+      .then(res => res.json())
+      .then(data => {
+        // Nur die letzten 3 Wettkampf-Ergebnisse, sortiert nach Datum absteigend
+        const wettkampfErgebnisse = data
+          .filter(r => r.art === "Wettkampf")
+          .sort((a, b) => new Date(b.datum) - new Date(a.datum))
+          .slice(0, 3);
+        setResults(wettkampfErgebnisse);
+      });
+  }
+}, [user]);
+
+return (
+  <>
+    <div className="dashboard-header">
+      <h2>
+        {user
+          ? `Willkommen, ${user.vorname || user.email || "Athlet"}!`
+          : "Willkommen im Portal!"}
+      </h2>
+    </div>
+
+    <div className="dashboard-card">
+      <h3>Letzte Wettkampfergebnisse</h3>
+      <table className="dashboard-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Wettkampf</th>
+            <th>Ergebnis</th>
+          </tr>
+        </thead>
+        <tbody>
+          {results.length === 0 ? (
+            <tr>
+              <td colSpan={3}>Noch keine Ergebnisse vorhanden.</td>
+            </tr>
+          ) : (
+            results.map((r, i) => (
+              <tr key={i}>
+                <td>{r.datum?.substring(0, 10) || "-"}</td>
+                <td>{r.wettkampf || r.kommentar || "-"}</td>
+                <td>{r.wert || "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  </>
+);
 }
