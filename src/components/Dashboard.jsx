@@ -73,30 +73,30 @@ return (
       <>
         <div className="dashboard-card" style={{ marginTop: 24 }}>
           <h3>Leistungskurve (letzte 5 Ergebnisse)</h3>
-          <Line
-            data={{
-              labels: results.slice(-5).map(r => r.datum?.substring(5, 10) || "-"),
-              datasets: [
-                {
-                  label: "Ergebnis",
-                  data: results.slice(-5).map(r => parseFloat(r.wert)),
-                  borderColor: "#1976d2",
-                  backgroundColor: "#90caf9",
-                  tension: 0.2,
-                  pointRadius: 4,
-                  fill: false,
-                },
-              ],
-            }}
-            options={{
-              responsive: true,
-              plugins: { legend: { display: false } },
-              scales: {
-                y: { beginAtZero: false },
-              },
-            }}
-            height={180}
-          />
+
+ const lastFive = results.slice(-5).reverse();
+
+<Line
+  data={{
+    labels: lastFive.map(r => r.datum?.substring(5, 10) || "-"),
+    datasets: [{
+      label: "Ergebnis",
+      data: lastFive.map(r => parseFloat(r.wert)),
+      borderColor: "#1976d2",
+      backgroundColor: "#90caf9",
+      tension: 0.2,
+      pointRadius: 4,
+      fill: false,
+    }],
+  }}
+  options={{
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: false } },
+  }}
+  height={180}
+/>
+
         </div>
 
         <div className="dashboard-average">
