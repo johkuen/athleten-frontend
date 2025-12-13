@@ -21,16 +21,15 @@ export default function Login() {
         body: JSON.stringify({ email, password: pw }),
         
       });
-      const data = await res.json();
-      if (data.success) {
-        // Beispiel: Token speichern, Userdaten ggf. im Context/State ablegen
-        localStorage.setItem("token", data.token);
-        // Weiterleitung ins Portal
-        navigate("/portal/dashboard");
-      } else {
-        setError(data.error || "Login fehlgeschlagen");
-      }
-    } catch (err) {
+  const data = await res.json();
+  if (res.ok && data.token) {
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    navigate("/portal/dashboard");
+  } else {
+    setError(data.error || "Login fehlgeschlagen");
+  }
+} catch (err) {
       setError("Server nicht erreichbar");
     }
     setLoading(false);
