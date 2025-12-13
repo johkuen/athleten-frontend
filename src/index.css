@@ -420,3 +420,9 @@ h1 {
   transform: translateY(-2px) scale(1.03);
   border: 3px solid #f39c12; /* Orange-Umrandung */
 }
+.dashboard-card canvas {
+  width: 100% !important;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
