@@ -413,3 +413,10 @@ h1 {
   letter-spacing: 1px;
   opacity: 0.93;
 }
+#discipline-buttons button.active,
+#buttons button.active {
+  background: linear-gradient(90deg, #1866a5 0%, #2a9df4 100%);
+  box-shadow: 0 4px 20px rgba(40,116,166,0.14);
+  transform: translateY(-2px) scale(1.03);
+  border: 3px solid #f39c12; /* Orange-Umrandung */
+}
