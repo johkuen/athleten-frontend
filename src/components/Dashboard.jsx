@@ -52,29 +52,35 @@ return (
             <th>Ergebnis</th>
           </tr>
         </thead>
-        <tbody>
-          {results.length === 0 ? (
-            <tr>
-              <td colSpan={3}>Noch keine Ergebnisse vorhanden.</td>
-            </tr>
-          ) : (
-            results.map((r, i) => (
-              <tr key={i}>
-                <td>{r.datum?.substring(0, 10) || "-"}</td>
-                <td>{r.wettkampf || r.kommentar || "-"}</td>
-                <td>{r.wert || "-"}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+      <tbody>
+{tableResults.length === 0 ? (
+  <tr>
+    <td colSpan={3}>Noch keine Ergebnisse vorhanden.</td>
+  </tr>
+) : (
+  tableResults.map((r, i) => (
+    <tr key={i}>
+      <td>{r.datum?.substring(0, 10) || "-"}</td>
+      <td>{r.wettkampf || r.kommentar || "-"}</td>
+      <td>{r.wert || "-"}</td>
+    </tr>
+  ))
+)}
+      </tbody>
+    </table>
+  </div>
     {results.length > 0 && (
       <>
         <div className="dashboard-card" style={{ marginTop: 24 }}>
           <h3>Leistungskurve (letzte 5 Ergebnisse)</h3>
 
- const lastFive = results.slice(-5).reverse();
+ const lastFive = [...results]
+  .sort((a, b) => new Date(a.datum) - new Date(b.datum)) // von alt nach neu
+  .slice(-5); // die letzten 5, jetzt chronologisch sortiert
+
+  const tableResults = [...results]
+  .sort((a, b) => new Date(b.datum) - new Date(a.datum)) // neueste oben
+  .slice(0, 5);
 
 <Line
   data={{
