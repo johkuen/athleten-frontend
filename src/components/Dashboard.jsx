@@ -29,16 +29,15 @@ useEffect(() => {
 }, [user]);
 
 return (
-  <>
-    <div className="dashboard-header">
-      <h2>
+  <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginTop: "48px" }}>
+    <div className="dashboard-header" style={{ marginBottom: "24px" }}>
+      <h2 style={{ textAlign: "center", marginTop: 0 }}>
         {user
           ? `Willkommen, ${user.vorname || user.email || "Athlet"}!`
           : "Willkommen im Portal!"}
       </h2>
     </div>
-
-    <div className="dashboard-card">
+    <div className="dashboard-card" style={{ margin: "0 auto" }}>
       <h3>Letzte Wettkampfergebnisse</h3>
       <table className="dashboard-table">
         <thead>
@@ -65,6 +64,6 @@ return (
         </tbody>
       </table>
     </div>
-  </>
+  </div>
 );
 }
