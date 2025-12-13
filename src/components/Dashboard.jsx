@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+
+// Chart.js Komponenten registrieren (nur einmal im Projekt nötig)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function Dashboard() {
   // Userdaten aus localStorage holen
@@ -64,6 +69,44 @@ return (
         </tbody>
       </table>
     </div>
+    {results.length > 0 && (
+      <>
+        <div className="dashboard-card" style={{ marginTop: 24 }}>
+          <h3>Leistungskurve (letzte 5 Ergebnisse)</h3>
+          <Line
+            data={{
+              labels: results.slice(-5).map(r => r.datum?.substring(5, 10) || "-"),
+              datasets: [
+                {
+                  label: "Ergebnis",
+                  data: results.slice(-5).map(r => parseFloat(r.wert)),
+                  borderColor: "#1976d2",
+                  backgroundColor: "#90caf9",
+                  tension: 0.2,
+                  pointRadius: 4,
+                  fill: false,
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: { beginAtZero: false },
+              },
+            }}
+            height={180}
+          />
+        </div>
+
+        <div className="dashboard-average">
+          Aktueller Durchschnitt: {(
+            results.slice(-5).reduce((sum, r) => sum + parseFloat(r.wert), 0) /
+            results.slice(-5).length
+          ).toFixed(2)}
+        </div>
+      </>
+    )}
   </div>
 );
 }
