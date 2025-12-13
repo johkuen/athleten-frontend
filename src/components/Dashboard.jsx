@@ -5,6 +5,22 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 // Chart.js Komponenten registrieren (nur einmal im Projekt nötig)
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
+function DashboardProfile({ user }) {
+  if (!user) return null;
+
+  const bildUrl = user.bild_url || "/default-profile.jpg"; // Passe ggf. an
+  const name = `${user.vorname || ""} ${user.nachname || ""}`.trim() || user.email || "Athlet";
+  const status = user.kaderstatus || "Kein Status";
+
+  return (
+    <div className="dashboard-card dashboard-profile">
+      <img src={bildUrl} alt="Profilbild" />
+      <div className="profile-name">{name}</div>
+      <div className="profile-status">{status}</div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   // Userdaten aus localStorage holen
   const [user, setUser] = useState(null);
@@ -51,6 +67,9 @@ export default function Dashboard() {
             : "Willkommen im Portal!"}
         </h2>
       </div>
+
+      <DashboardProfile user={user} />
+
       <div className="dashboard-card">
         <h3>Letzte Wettkampfergebnisse</h3>
         <table className="dashboard-table">
