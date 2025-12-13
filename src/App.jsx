@@ -15,7 +15,7 @@ function PortalLayout() {
   return (
     <>
       <Navbar />
-      <div>
+      <div id="portal-wrapper">
         <Outlet />
       </div>
     </>
