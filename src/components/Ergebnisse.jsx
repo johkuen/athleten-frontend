@@ -31,9 +31,19 @@ export default function Ergebnisse() {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+  const { name, value } = e.target;
+
+  if (name === "wettkampf") {
+    const selectedWettkampf = wettkaempfe.find(w => w.name === value);
+    setForm(prev => ({
+      ...prev,
+      wettkampf: value,
+      datum: selectedWettkampf ? selectedWettkampf.datum.substring(0, 10) : prev.datum
+    }));
+  } else {
     setForm(prev => ({ ...prev, [name]: value }));
-  };
+  }
+};
 
   const handleSave = () => {
     if (form.id) {
