@@ -15,9 +15,12 @@ function DashboardProfile({ user }) {
 
   return (
     <div className="dashboard-card dashboard-profile">
-      <img src={bildUrl} alt="Profilbild" onError={(e) => e.target.src = "/images/default-profile.jpg"} />
+      <img
+        src={bildUrl}
+        alt="Profilbild"
+        onError={(e) => { e.target.onerror = null; e.target.src = "/images/default-profile.jpg"; }}
+      />
       <div className="profile-name">{user.vorname} {user.nachname}</div>
-      {/* Weitere Profilinfos */}
     </div>
   );
 }
