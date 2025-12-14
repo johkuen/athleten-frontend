@@ -22,13 +22,15 @@ function DashboardProfile({ user }) {
   );
 }
 
-export default function Dashboard() {
-  const [user, setUser] = useState(null);
-  const [results, setResults] = useState([]);
+export default function Dashboard({user}) {
+   const [results, setResults] = useState([]);
 
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    if (userString) setUser(JSON.parse(userString));
+   useEffect(() => {
+    // Passe die URL ggf. an (z.B. mit User-ID, wenn nötig)
+    fetch("https://athletenwebsite.onrender.com/api/ergebnisse")
+      .then(res => res.json())
+      .then(data => setResults(data))
+      .catch(() => setResults([]));
   }, []);
 
   useEffect(() => {
