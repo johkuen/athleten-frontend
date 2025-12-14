@@ -14,16 +14,17 @@ export default function Ergebnisse() {
   });
 
   // Wettkämpfe laden
-  useEffect(() => {
-    fetch("/api/wettkaempfe")
-      .then(res => res.json())
-      .then(data => setWettkaempfe(data))
-      .catch(() => setWettkaempfe([]));
-  }, []);
+ useEffect(() => {
+  fetch("https://athletenwebsite.onrender.com/api/wettkaempfe")
+    .then(res => res.json())
+    .then(data => setWettkaempfe(data))
+    .catch(() => setWettkaempfe([]));
+}, []);
+
 
   // Ergebnisse laden
   useEffect(() => {
-    fetch("/api/ergebnisse")
+    fetch("https://athletenwebsite.onrender.com/api/ergebnisse")
       .then(res => res.json())
       .then(data => setResults(data))
       .catch(() => setResults([]));
@@ -62,7 +63,7 @@ export default function Ergebnisse() {
           <select name="wettkampf" value={form.wettkampf} onChange={handleChange}>
             <option value="">-- Wettkampf auswählen --</option>
             {wettkaempfe.map(w => (
-              <option key={w.id} value={w.name}>{w.name}</option>
+               <option key={w.id} value={w.name}>{w.name} ({new Date(w.datum).toLocaleDateString()})</option>
             ))}
           </select>
         )}
