@@ -6,14 +6,18 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 function DashboardProfile({ user }) {
   if (!user) return null;
-  const bildUrl = user.bild_url || "/default-profile.jpg";
-  const name = `${user.vorname || ""} ${user.nachname || ""}`.trim() || user.email || "Athlet";
+   // Beispiel: Nachname-Vorname_2026.jpg (alles klein und ohne Umlaute/Leerzeichen)
+  const formatName = (str) => 
+    str.toLowerCase().replace(/\s+/g, '-').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  const bildName = `${formatName(user.nachname)}-${formatName(user.vorname)}_2026.jpg`;
+  const bildUrl = `/images/${bildName}`;
+
   return (
     <div className="dashboard-card dashboard-profile">
-      <div className="profile-title">Profil</div>
-      <img src={bildUrl} alt="Profilbild" />
-      <div className="profile-name">{name}</div>
-      <a className="dashboard-link" href="/portal/profil">Profil anzeigen →</a>
+      <img src={bildUrl} alt="Profilbild" onError={(e) => e.target.src = "/images/default-profile.jpg"} />
+      <div className="profile-name">{user.vorname} {user.nachname}</div>
+      {/* Weitere Profilinfos */}
     </div>
   );
 }
