@@ -71,15 +71,16 @@ h1 {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 56px;
+  min-height: 70px;
   background: transparent;
   box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 40px;
   z-index: 100;
   box-sizing: border-box;
+  box-shadow: 0 3px 16px rgba(25, 118, 210, 0.2);
 }
 .nav-left {
   display: flex;
@@ -94,8 +95,8 @@ h1 {
   border: none;
   color: #fff;
   font-weight: 600;
-  font-size: 1.1em;
-  padding: 14px 20px;
+  font-size: 1.2em;
+  padding: 18px 28px;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   border-radius: 0;
@@ -103,7 +104,7 @@ h1 {
 }
 .portal-nav button.active,
 .portal-nav button:hover {
-  border-bottom: 3px solid #fff;
+  border-bottom: 4px solid #fff;
   background: rgba(255,255,255,0.12);
 }
 .logout-btn-small {
